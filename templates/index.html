@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Text Processing Workshop</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    </head>
+    <body>
+        <div class="container">
+            <header>
+                <h1>Text Processing Workshop</h1>
+            </header>
+            <form method="POST">
+                <textarea name="text" placeholder="Enter text here">{{ text }}</textarea>
+                <input type="submit" value="Process">
+            </form>
+            {% if text %}
+            <h2>Pre-processed Text</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Original Sentence</th>
+                            <th>Pre-processed Sentence</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in range(tokenized_words|length) %}
+                        <tr>
+                            <td>{{ tokenized_words[i] }}</td>
+                            <td>{{ filtered_words[i] }}</td>
+                        </tr>
+                        {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+            
+            <h2>Bag of Words</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Word</th>
+                            <th>Count</th>
+                            <th>Part of Speech Tag</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for word, count in bag_of_words.most_common() %}
+                        {% set tag = pos_tags[word] %}
+                        <tr>
+                            <td>{{ word }}</td>
+                            <td>{{ count }}</td>
+                            <td>{{ tag }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <h2>Sentence Count</h2>
+            <p>{{ sentence_count }} sentences</p>
+            <h2>Term Frequency</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Word</th>
+                            <th>TF</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for word, tf in tf.items() %}
+                        <tr>
+                            <td>{{ word }}</td>
+                            <td>{{ tf }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% endif %}
+        </div>
+    </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
